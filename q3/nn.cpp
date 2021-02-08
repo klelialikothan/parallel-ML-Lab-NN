@@ -21,10 +21,10 @@ static std::uniform_real_distribution<double> w_distr(-1.0, 1.0);
 // init random engine for uniformly distributed doubles in [-0.5, 0.5] -> biases
 std::default_random_engine b_gen(static_cast<unsigned>(time(nullptr)));
 static std::uniform_real_distribution<double> b_distr(-0.5, 0.5);
-// init random engine for uniformly distributed doubles in [-0.5, 0.5] -> biases
+// init random engine for uniformly distributed doubles in [0.0, 100.0]
 std::default_random_engine s_gen(static_cast<unsigned>(time(nullptr)));
 static std::uniform_real_distribution<double> s_distr(0.0, 100.0);
-// init random engine for uniformly distributed doubles in [-0.5, 0.5] -> biases
+// init random engine for uniformly distributed doubles in [400.0, 500.0]
 std::default_random_engine l_gen(static_cast<unsigned>(time(nullptr)));
 static std::uniform_real_distribution<double> l_distr(400.0, 500.0);
 
@@ -34,7 +34,7 @@ array<array<double, OUTPUT_NEURONS>, TRAIN_SAMPLES> train_labels;
 array<array<double, INPUT_SIZE>, HIDDEN_NEURONS> l1_weights;
 array<double, HIDDEN_NEURONS> l1_weighted_sums;
 array<double, HIDDEN_NEURONS+1> l1_outputs;
-array<double, HIDDEN_NEURONS> l1_deltas = {{0}}; // TODO elsewhere
+array<double, HIDDEN_NEURONS> l1_deltas;
 array<array<double, HIDDEN_NEURONS+1>, OUTPUT_NEURONS> l2_weights;
 array<double, OUTPUT_NEURONS> l2_weighted_sums;
 array<double, OUTPUT_NEURONS> l2_outputs;
@@ -98,6 +98,8 @@ void init_network(){
 
     // level 2 bias coefficient (always equal to 1)
     l1_outputs[HIDDEN_NEURONS] = 1.0;
+
+    l1_deltas = {{0}};
 
 }
 
